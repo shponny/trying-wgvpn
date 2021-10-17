@@ -1,0 +1,22 @@
+---
+- name: generate client keys
+  shell:
+    chdir: /etc/wireguard
+    cmd: umask 077 && wg genkey | tee privatekey | wg pubkey > publickey
+
+- name: get public key contents
+  command: cat /etc/wireguard/publickey
+  register: publickey_contents
+  changed_when: False
+
+- name: set public key fact
+  set_fact:
+    pubkey: "{{ publickey_contents.stdout }}"
+
+- name: create client wireguard config
+  template:
+    dest: /etc/wireguard/wg0.conf
+    src: clientconf.j2
+    owner: root
+    group: root
+    mode: '0600'

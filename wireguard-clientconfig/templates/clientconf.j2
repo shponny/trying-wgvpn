@@ -1,0 +1,9 @@
+[Interface]
+Address = 10.0.10.100/31
+
+PostUp = wg set %i private-key /etc/wireguard/privatekey
+
+[Peer]
+PublicKey = {{ server_pubkey }}
+Endpoint = {{ hostvars[groups['vpn_server'][0]].vpn_server_ip }}:51820
+AllowedIPs = 0.0.0.0/0

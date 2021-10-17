@@ -1,0 +1,22 @@
+---
+- name: get inventory ip addresses
+  hosts: vpn_server
+  tasks:
+    - amazon.aws.ec2_metadata_facts:
+    - set_fact:
+        vpn_server_ip: "{{ ansible_ec2_public_ipv4 }}"
+        
+- name: setup vpn client
+  hosts: vpn_client
+  connection: local
+  become: yes
+
+  roles:
+    - wireguard-install
+    - wireguard-clientconfig
+
+- name: setup vpn server
+  hosts: vpn_server
+  roles:
+    - wireguard-install
+    - wireguard-serverconfig

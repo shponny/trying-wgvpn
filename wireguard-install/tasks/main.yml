@@ -1,0 +1,23 @@
+---
+- name: install elrepo and epel
+  yum:
+    name:
+      - elrepo-release
+      - epel-release
+    state: present
+    update_cache: yes
+
+- name: install wireguard package
+  yum:
+    name:
+      - kmod-wireguard
+      - wireguard-tools
+      - firewalld
+    state: present
+    update_cache: yes
+
+- name: enable firewalld
+  service:
+    name: firewalld
+    state: started
+    enabled: yes

@@ -1,0 +1,52 @@
+---
+- name: create server wireguard config
+  template:
+    dest: /etc/wireguard/wg0.conf
+    src: serverconf.j2
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: config ip forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    state: present
+    sysctl_set: yes
+    reload: yes
+
+- name: start wiregard + boot + firewall
+  service:
+    name: wg-quick@wg0
+    enabled: yes
+    state: started
+    
+- name: setting up firewalld
+  firewalld:
+    port: 51820/udp
+    permanent: yes
+    state: enabled
+    zone: public
+
+- name: add masquerade for public zone in firewall
+  firewalld:
+    zone: public
+    masquerade: yes
+    permanent: yes
+    state: enabled
+
+- name: adding interface to firewall
+  firewalld:
+    zone: internal
+    interface: wg0
+    permanent: yes
+    state: enabled
+
+- name: adding masquerade for internal zone in firewall
+  firewalld:
+    zone: internal
+    masquerade: yes
+    permanent: yes
+    state: enabled
+  notify:
+    - restart firewalld

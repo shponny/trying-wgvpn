@@ -1,0 +1,2 @@
+[vpn_client]
+localhost   ansible_connection=local
