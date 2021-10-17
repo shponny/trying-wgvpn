@@ -9,6 +9,8 @@ Trying to deploy Wireguard VPN on EC2 + Wireguard client on localhost with Ansib
 4. Testinfra
 
 AWS key credentials - in **~/.aws/credentials** - https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html
+
+
 SSH key - look in `main.tf`, `ansible.cfg` and `infratest.sh`
 
 ###Run:
