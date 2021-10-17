@@ -13,7 +13,7 @@ AWS key credentials - in **~/.aws/credentials** - https://boto3.amazonaws.com/v1
 
 SSH key - look in `main.tf`, `ansible.cfg` and `infratest.sh`
 
-###Run:
+### Run:
 
 Add +x to `install.sh`
 
