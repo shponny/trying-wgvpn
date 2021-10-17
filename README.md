@@ -21,12 +21,12 @@ Add +x to `install.sh`
 ./install.sh
 ```
 
-##Enable VPN on client:
+## Enable VPN on client:
 ```bash
 wg-quick up wg0
 ```
 
-##Disable VPN on client:
+## Disable VPN on client:
 ```bash
 wg-quick down wg0
 ```
